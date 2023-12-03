@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -24,6 +25,10 @@ import com.example.simondice.MyColors
 import com.example.simondice.MyViewModel
 import com.example.simondice.R
 import com.example.simondice.State
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * User interface of the game
@@ -43,17 +48,17 @@ fun UserInterface(miViewModel: MyViewModel) {
  */
 @Composable
 fun round(myViewModel: MyViewModel){
-    Column {
+    Column (modifier = Modifier.padding(top = 20.dp)){
         // Row with the text "Record" and "Round"
         Row {
             Text(
-                modifier = Modifier.padding(20.dp,0.dp,0.dp,0.dp),
+                modifier = Modifier.padding(25.dp,0.dp,0.dp,0.dp),
                 text = "Record",
                 fontSize = 25.sp,
                 color = Color.White
             )
             Text(
-                modifier = Modifier.padding(240.dp,0.dp,0.dp,0.dp),
+                modifier = Modifier.padding(200.dp,0.dp,0.dp,0.dp),
                 text = "Round",
                 fontSize = 25.sp,
                 color = Color.White
@@ -62,7 +67,7 @@ fun round(myViewModel: MyViewModel){
         // Row with the record and the round
         Row {
             Text(
-                modifier = Modifier.padding(20.dp,0.dp,0.dp,0.dp),
+                modifier = Modifier.padding(40.dp,0.dp,0.dp,0.dp),
                 text = "${myViewModel.getRecord()}",
                 fontSize = 25.sp,
                 color = Color.White
@@ -83,7 +88,7 @@ fun round(myViewModel: MyViewModel){
  */
 @Composable
 fun botonesSimon(myViewModel: MyViewModel){
-    Row (modifier = Modifier.padding(0.dp,100.dp,0.dp,0.dp)){
+    Row (modifier = Modifier.padding(0.dp,50.dp,0.dp,0.dp)){
         columnButtonSimon(color = MyColors.BLUE.color,myViewModel)
         columnButtonSimon(color = MyColors.GREEN.color, myViewModel)
     }
@@ -103,9 +108,15 @@ fun columnButtonSimon(color: MutableState<Color>, myViewModel: MyViewModel){
             onClick = {
                 if (Data.state != State.SEQUENCE) {
                     myViewModel.increaseUserSecuence(Data.colors.indexOf(color))
+                    val originalColor = color.value
+                    color.value = myViewModel.darkenColor(color.value, 0.5f)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(300L) // delay for 300 ms
+                        color.value = originalColor
+                    }
                 }
             },
-            shape = CircleShape,
+            shape = RoundedCornerShape(20),
             modifier = Modifier
                 .height(200.dp)
                 .width(200.dp)
@@ -130,6 +141,7 @@ fun startIncreaseRound(miViewModel: MyViewModel){
                     // change the play status
                     miViewModel.changePlayStatus()
                 },
+                shape = RoundedCornerShape(20),
                 modifier = Modifier
                     .height(200.dp)
                     .width(200.dp)
@@ -150,6 +162,7 @@ fun startIncreaseRound(miViewModel: MyViewModel){
                     }
 
                 },
+                shape = RoundedCornerShape(20),
                 modifier = Modifier
                     .height(200.dp)
                     .width(200.dp)

@@ -103,7 +103,6 @@ class MyViewModel: ViewModel(){
      */
     fun showBotSequence(){
         viewModelScope.launch {
-            // we need to do the coroutines in the _viewModelScope.launch_
             for (colorIndex in Data.botSecuence) {
                 Data.colorFlag = Data.colors[colorIndex].value
                 Data.colorsMyColors[colorIndex].color.value = darkenColor(Data.colorFlag, 0.5f)
@@ -128,7 +127,6 @@ class MyViewModel: ViewModel(){
         Data.state = State.WAITING
         Log.d("ESTADO",Data.state.toString())
     }
-
 
     /**
      * Check if the user secuence is correct
