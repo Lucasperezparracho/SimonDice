@@ -142,13 +142,16 @@ fun startIncreaseRound(miViewModel: MyViewModel){
                     miViewModel.changePlayStatus()
                 },
                 shape = RoundedCornerShape(20),
+                // change the color off the button white
+                colors = ButtonDefaults.buttonColors(Color.White),
                 modifier = Modifier
                     .height(200.dp)
                     .width(200.dp)
                     .padding(50.dp, 50.dp)
             ){
                 Text(
-                    text = miViewModel.getPlayStatus(), textAlign = TextAlign.Center
+                    text = miViewModel.getPlayStatus(), textAlign = TextAlign.Center,
+                    color = Color.Black
                 )
             }
         }
@@ -163,6 +166,7 @@ fun startIncreaseRound(miViewModel: MyViewModel){
 
                 },
                 shape = RoundedCornerShape(20),
+                colors = ButtonDefaults.buttonColors(Color.White),
                 modifier = Modifier
                     .height(200.dp)
                     .width(200.dp)
